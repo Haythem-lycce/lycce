@@ -1,0 +1,156 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Pourquoi on voyage ?</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f8;--fg:#0f2233;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#070d18;--fg:#e8f0f8}}
+:root[data-theme=dark]{--bg:#070d18;--fg:#e8f0f8}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;height:100%;position:relative;overflow:hidden;background:var(--bg);color:var(--fg);font:400 16px Inter,system-ui,sans-serif}
+.st{position:absolute;inset:0;background:#06121f;color:#fff;overflow:hidden}
+.st:before{content:"";position:absolute;inset:0;z-index:5;opacity:.09;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.st:after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.5))}
+.sc{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:8vmin 9vmin;opacity:0;filter:blur(14px);transition:opacity 1.3s,filter 1.3s;pointer-events:none}
+.sc.on{opacity:1;filter:none}
+.bg{position:absolute;inset:-6%}
+.on .bg{animation:kb 18s ease-out forwards}
+@keyframes kb{to{transform:scale(1.12) translate(-1.5%,-1%)}}
+.k,h1,p{position:relative;z-index:1}
+.k{font:500 clamp(13px,2.3vmin,19px) Inter,sans-serif;opacity:.8;display:flex;align-items:center;gap:.9em}
+.k:before{content:"";width:2.6em;height:1px;background:#fff;opacity:.7}
+h1{font:800 clamp(32px,9vmin,84px)/1.05 Fraunces,Georgia,serif;margin:.3em 0 .4em;max-width:13em}
+p{font-size:clamp(17px,3.6vmin,32px);line-height:1.5;max-width:26em;margin:0;opacity:.95}
+.w{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(6px);transition:opacity .8s,transform .8s,filter .8s}
+.on h1 .w{transition-delay:calc(var(--i)*110ms + .5s)}
+.on p .w{transition-delay:calc(var(--i)*260ms + 1.6s)}
+.on .w{opacity:1;transform:none;filter:none}
+.rt{position:absolute;left:0;right:0;bottom:6%;width:100%;height:32%;opacity:.85}
+.hud{position:absolute;top:0;left:0;right:0;z-index:9;display:flex;justify-content:flex-end;padding:3vmin 4vmin}
+.bar{position:absolute;left:0;bottom:0;height:4px;width:0;background:#fff;opacity:.85;z-index:9;transition:width 1.4s}
+button{font:inherit;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.4);border-radius:99px;padding:.6em 1.2em;cursor:pointer}
+button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cr,.go{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6vmin;text-align:center;padding:6vmin}
+.cr{z-index:8;background:rgba(4,12,22,.88);opacity:0;pointer-events:none;transition:opacity 1.4s}
+.cr.on{opacity:1;pointer-events:auto}
+.cr b{font:800 clamp(28px,8vmin,72px)/1.1 Fraunces,Georgia,serif}
+.cr small,.go span{opacity:.75;font-size:clamp(13px,2.4vmin,18px)}
+.cr em{font-style:normal;margin:3vmin 0 1vmin;opacity:.9;font-size:clamp(16px,3vmin,24px)}
+.go{z-index:10;background:linear-gradient(#06172b 50%,#051624 50%);justify-content:flex-end;padding-bottom:7vmin;transition:opacity .8s;gap:1.4vmin}
+.go>button,.go>span{position:relative;z-index:1}
+.ps{position:absolute;inset:0}.ps svg{display:block;width:100%;height:100%}
+.go h2{font:800 clamp(30px,8vmin,70px)/1.05 Fraunces,Georgia,serif;margin:0}
+#go{font-size:clamp(16px,3vmin,22px);padding:.9em 1.9em;background:#fff;color:#0a2e4d;border:0;font-weight:500}
+.h{opacity:0;pointer-events:none}
+h1,p{text-shadow:0 2px 28px rgba(0,0,0,.35)}
+.hud button{padding:.3em .8em}
+canvas.fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;mix-blend-mode:screen;opacity:.85}
+.lb{position:absolute;left:0;right:0;height:0;background:#000;z-index:7;transition:height 1.6s cubic-bezier(.2,.7,.2,1)}
+.lb.t{top:0}.lb.b{bottom:0}.play .lb{height:clamp(26px,7vmin,64px)}
+.sw{position:absolute;top:-20%;bottom:-20%;left:-40%;width:35%;z-index:4;pointer-events:none;opacity:0;background:linear-gradient(100deg,transparent,rgba(255,236,200,.3),transparent);transform:skewX(-12deg)}
+.sw.run{animation:sw 1.7s ease-out}
+@keyframes sw{0%{opacity:0;transform:translateX(0) skewX(-12deg)}20%{opacity:1}100%{opacity:0;transform:translateX(420%) skewX(-12deg)}}
+.cr>*{opacity:0;transform:translateY(.6em);filter:blur(6px);transition:opacity 1s,transform 1s,filter 1s}
+.cr.on>*{opacity:1;transform:none;filter:none}
+.cr.on>:nth-child(2){transition-delay:.4s}.cr.on>:nth-child(3){transition-delay:.9s}.cr.on>:nth-child(4){transition-delay:1.6s}.cr.on>:nth-child(5){transition-delay:2.2s}
+@media(prefers-reduced-motion:reduce){.on .bg{animation:none}.fx,.sw{display:none}}
+
+.il{position:absolute;z-index:1;right:7vmin;top:50%;width:min(44vw,74vh);transform:translateY(-50%) rotate(var(--r,0deg)) scale(.94);opacity:0;filter:blur(10px);transition:opacity 1.2s .5s,transform 1.8s .5s,filter 1.2s .5s;pointer-events:none}
+.on .il{opacity:1;transform:translateY(-50%) rotate(var(--r,0deg)) scale(1);filter:none}
+.il svg{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
+.on .il svg{animation:fl 14s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-1.5%) scale(1.03)}}
+@media(orientation:landscape){.hi .k,.hi h1,.hi p{max-width:min(44vw,26em)}}
+@media(orientation:portrait){.hi{justify-content:flex-end;padding-bottom:12vh}.il{right:auto;left:50%;top:12vh;width:min(72vw,38vh);transform:translateX(-50%) rotate(var(--r,0deg)) scale(.94)}.on .il{transform:translateX(-50%) rotate(var(--r,0deg)) scale(1)}}
+@media(prefers-reduced-motion:reduce){.il svg{animation:none}}
+</style></head><body>
+<div class="st">
+<div class="hud"><button id="m" aria-label="Couper le son">🔊</button></div>
+<div class="bar"></div>
+<div class="cr"><small>Réalisé par</small><b>Haythem Ftouhi</b><b>Adem Nasri</b><em>Merci de votre attention !</em><button id="re">↻ Revoir</button></div>
+<div class="go"><div class="ps"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06172b"/><stop offset=".45" stop-color="#0f4a6e"/><stop offset=".78" stop-color="#e7955a"/><stop offset="1" stop-color="#ffd59a"/></linearGradient>
+<linearGradient id="se" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffbe7d"/><stop offset=".2" stop-color="#3a9fb4"/><stop offset="1" stop-color="#0a2f4c"/></linearGradient>
+<radialGradient id="gl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe2b0" stop-opacity=".95"/><stop offset=".35" stop-color="#ffab5e" stop-opacity=".4"/><stop offset="1" stop-color="#ffab5e" stop-opacity="0"/></radialGradient>
+<radialGradient id="vg" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient>
+<linearGradient id="ft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06172b"/><stop offset="1" stop-color="#06172b" stop-opacity="0"/></linearGradient>
+<linearGradient id="fb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#051624" stop-opacity="0"/><stop offset="1" stop-color="#051624"/></linearGradient>
+</defs>
+<rect width="1920" height="720" fill="url(#sk)"/>
+<rect y="720" width="1920" height="360" fill="url(#se)"/>
+<circle cx="1240" cy="700" r="520" fill="url(#gl)"/>
+<circle cx="1240" cy="694" r="62" fill="#fff3d6"/>
+<g fill="#ffe4b0" opacity=".6"><rect x="1110" y="732" width="260" height="5" rx="2"/><rect x="1140" y="758" width="200" height="5" rx="2"/><rect x="1165" y="790" width="150" height="4" rx="2"/><rect x="1190" y="832" width="100" height="4" rx="2"/><rect x="1205" y="884" width="70" height="3" rx="1"/></g>
+<path d="M980 720L1080 690L1160 706L1230 682L1330 716L1420 700L1560 720Z" fill="#2b6f8f" opacity=".55"/>
+<path d="M1440 720L1560 672L1660 700L1760 664L1920 700V720Z" fill="#1d5877" opacity=".75"/>
+<path d="M0 720V560C120 520 220 560 330 600C450 640 560 590 700 640C820 680 900 700 1000 720Z" fill="#123f5f"/>
+<path d="M0 1080V800C160 780 300 700 470 690C640 680 760 740 900 790C1040 840 1120 960 1180 1080Z" fill="#08203a"/>
+<path d="M470 690C640 680 760 740 900 790" fill="none" stroke="#ffb870" stroke-opacity=".5" stroke-width="2"/>
+<g transform="translate(640 690) scale(1.4) translate(-640 -700)" fill="#030c16">
+<circle cx="640" cy="590" r="26"/><path d="M612 622Q608 690 618 708L668 708Q678 662 668 622Q640 606 612 622Z"/><rect x="586" y="612" width="46" height="86" rx="16"/>
+<path d="M660 702L722 678L746 712" fill="none" stroke="#030c16" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M664 614Q678 662 668 704" fill="none" stroke="#ffb870" stroke-opacity=".6" stroke-width="2"/></g>
+<path d="M60 520C200 500 360 470 500 404" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="3" stroke-dasharray="4 13" stroke-linecap="round"/>
+<path transform="translate(506 401) rotate(-25)" d="M0 0L-50 -19L-32 0L-50 19Z" fill="#fff"/>
+<g fill="#fff" opacity=".7"><circle cx="300" cy="90" r="2"/><circle cx="520" cy="150" r="1.6"/><circle cx="1400" cy="110" r="1.8"/><circle cx="1650" cy="60" r="2"/><circle cx="1800" cy="170" r="1.5"/><circle cx="760" cy="60" r="2"/></g>
+<rect width="1920" height="1080" fill="url(#vg)"/>
+<rect width="1920" height="150" fill="url(#ft)"/><rect y="930" width="1920" height="150" fill="url(#fb)"/>
+<g text-anchor="middle" fill="#fff" font-family="Fraunces,Georgia,'DejaVu Serif',serif" font-weight="800"><text x="960" y="220" font-size="150">Pourquoi</text><text x="960" y="370" font-size="150">on voyage ?</text></g>
+<text x="960" y="450" text-anchor="middle" fill="#ffd59a" font-family="Inter,'DejaVu Sans',sans-serif" font-size="34">Un film de Haythem Ftouhi et Adem Nasri</text>
+</svg>
+</div><button id="go">▶ Lancer le film</button><span>Active le son : voix et musique</span></div>
+</div>
+<script>
+const S=[
+{k:'Un projet de français',t:'Pourquoi on voyage ?',p:'Un film de Haythem Ftouhi et Adem Nasri',v:'Pourquoi est-ce qu’on voyage ? On s’est posé la question, et voilà ce qu’on en pense.',c:['#0a2e4d','#1c8fb0','#f2a65a']},
+{k:'Changer d’air',t:'Voir autre chose que son quotidien',p:'Voyager, ce n’est pas juste partir ailleurs. C’est se rendre compte que le monde est bien plus grand que notre rue.',c:['#0d3b5c','#2a9d8f','#e9c46a']},
+{k:'Les endroits',t:'Des lieux qu’on ne connaissait que sur photo',p:'Un paysage, une vieille ville, un monument… les voir en vrai, ce n’est pas du tout pareil.',c:['#0b3c49','#3aa6a0','#f4d58d']},
+{k:'Les cultures',t:'Chaque pays a sa manière de vivre',p:'Les traditions, la langue, la cuisine… on goûte, on écoute, et on comprend qu’il n’y a pas qu’une seule façon de vivre.',c:['#3a2a5c','#c8553d','#f2cc8f']},
+{k:'Souffler',t:'Couper un peu avec tout ça',p:'Entre les cours, le travail et le stress, on a parfois besoin de souffler. Même un petit voyage avec la famille ou des amis fait un bien fou.',c:['#123a5e','#4aa3df','#ffd6a5']},
+{k:'Les gens et les souvenirs',t:'Ce qu’on garde, à la fin',p:'On rencontre des gens qu’on n’aurait jamais croisés, on apprend des mots nouveaux… et il nous reste une photo, un repas, un fou rire.',c:['#4a2545','#e07a5f','#f6bd60']},
+{k:'Conclusion',t:'Alors, pourquoi on voyage ?',p:'Pour découvrir, apprendre, rencontrer, souffler et se souvenir. Voyager, c’est aussi sortir un peu de sa zone de confort.',v:'Alors, pourquoi on voyage ? Pour découvrir, apprendre, rencontrer, souffler et se souvenir. Voyager, c’est aussi sortir un peu de sa zone de confort. Merci de votre attention.',c:['#0a2e4d','#1c8fb0','#f2a65a']}
+];
+const $=s=>document.querySelector(s),st=$('.st'),ss=window.speechSynthesis;
+const wr=t=>t.split(' ').map((w,i)=>`<span class="w" style="--i:${i}">${w}</span>`).join(' ');
+const ROUTE='<svg class="rt" viewBox="0 0 800 260" preserveAspectRatio="none"><path id="r" d="M0 230C180 20 420 280 800 40" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-dasharray="6 10"/><path d="M18 0L-14 -10L-8 0L-14 10Z" fill="#fff"><animateMotion id="pm" dur="10s" begin="indefinite" fill="freeze" rotate="auto"><mpath href="#r"/></animateMotion></path></svg>';
+const fr=x=>`<svg viewBox="0 0 400 400"><defs><clipPath id="cp"><rect x="14" y="14" width="372" height="372" rx="8"/></clipPath></defs><rect width="400" height="400" rx="14" fill="#fbf8f1"/><g clip-path="url(#cp)">${x}</g></svg>`;
+const IL=[0,
+[`<defs><linearGradient id="a1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6cbbe0"/><stop offset="1" stop-color="#ffd8a6"/></linearGradient></defs><rect width="400" height="400" fill="url(#a1)"/><circle cx="270" cy="205" r="46" fill="#fff3d0"/><path d="M0 235Q90 185 190 232T400 215V400H0Z" fill="#5fae9a"/><path d="M0 285Q120 240 230 276T400 262V400H0Z" fill="#3f8f7e"/><path d="M176 400L197 268H214L266 400Z" fill="#36465a"/><path d="M204 400L207 270" stroke="#fff" stroke-width="4" stroke-dasharray="16 14"/><g fill="#2a6b5d"><circle cx="86" cy="292" r="24"/><circle cx="330" cy="300" r="30"/></g><g fill="#5a3d2b"><rect x="83" y="300" width="6" height="34"/><rect x="326" y="310" width="7" height="40"/></g>`,-3],
+[`<defs><linearGradient id="a2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa8e6"/><stop offset="1" stop-color="#cfeaf7"/></linearGradient><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fb3b0"/><stop offset="1" stop-color="#0e6f86"/></linearGradient></defs><rect width="400" height="400" fill="url(#a2)"/><path d="M-10 270L110 110L170 190L230 90L330 230L420 180V270Z" fill="#5c7891"/><path d="M110 110L84 150L108 140L124 158L140 140ZM230 90L200 138L226 128L244 148L266 126Z" fill="#fff"/><path d="M0 262H400V400H0Z" fill="url(#b2)"/><path d="M60 300H180M220 330H340M90 355H200" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/><path d="M0 270Q60 240 120 268L140 400H0Z M330 400L350 250L372 400Z M300 400L320 290L342 400Z" fill="#1f5b47"/><g transform="translate(300 70)"><path d="M0 46C-26 16-22-6 0-6S26 16 0 46Z" fill="#ef5b4d"/><circle cy="12" r="8" fill="#fff"/></g>`,3],
+[`<defs><radialGradient id="a3" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#5dc2f2"/><stop offset="1" stop-color="#0d5d9a"/></radialGradient></defs><rect width="400" height="400" fill="#f1f6fb"/><circle cx="200" cy="215" r="112" fill="url(#a3)"/><g fill="#5fbf8a"><path d="M130 180Q160 150 200 170T190 215Q160 230 140 215Z"/><path d="M215 235Q250 215 280 245Q265 285 232 290Q212 265 215 235Z"/></g><g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"><ellipse cx="200" cy="215" rx="50" ry="112"/><path d="M90 215H310M105 165H295M105 265H295"/></g><g font-family="Inter,'DejaVu Sans',sans-serif" font-size="24" font-weight="700" text-anchor="middle" fill="#0f2233"><rect x="40" y="52" width="130" height="46" rx="23" fill="#ffd36e"/><path d="M80 98L74 118L104 98Z" fill="#ffd36e"/><text x="105" y="83">Bonjour</text><rect x="215" y="40" width="120" height="46" rx="23" fill="#ff9a7a"/><path d="M290 86L302 108L270 86Z" fill="#ff9a7a"/><text x="275" y="71">Hello</text><rect x="250" y="318" width="120" height="46" rx="23" fill="#8fdcb6"/><path d="M290 318L282 300L316 318Z" fill="#8fdcb6"/><text x="310" y="350">مرحبا</text></g>`,-2],
+[`<defs><linearGradient id="a4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe3b0"/></linearGradient></defs><rect width="400" height="400" fill="url(#a4)"/><circle cx="90" cy="150" r="42" fill="#fff1c9"/><rect y="215" width="400" height="80" fill="#31b5c4"/><path d="M0 240Q30 230 60 240T120 240T180 240T240 240T300 240T360 240T420 240M40 270Q70 260 100 270T160 270T220 270T280 270" stroke="#fff" stroke-opacity=".55" stroke-width="3" fill="none"/><path d="M150 205V172L176 205Z" fill="#fff"/><path d="M140 208H182L174 217H148Z" fill="#7a5a44"/><path d="M0 290Q200 262 400 292V400H0Z" fill="#f2d49b"/><ellipse cx="268" cy="338" rx="60" ry="8" fill="#000" opacity=".12"/><path d="M268 220V336" stroke="#6b4a32" stroke-width="6"/><path d="M200 232Q268 150 336 232Z" fill="#ef5b4d"/><path d="M234 232Q268 150 302 232Q268 220 234 232Z" fill="#fff"/>`,3],
+[`<defs><linearGradient id="a5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b2a6a"/><stop offset=".55" stop-color="#e0605f"/><stop offset="1" stop-color="#ffc06e"/></linearGradient></defs><rect width="400" height="400" fill="url(#a5)"/><circle cx="200" cy="262" r="86" fill="#ffe2a8" opacity=".95"/><path d="M60 90q8-9 16 0q8-9 16 0M300 120q6-7 12 0q6-7 12 0" stroke="#2a1a3d" stroke-width="3" fill="none"/><path d="M0 300Q200 268 400 300V400H0Z" fill="#1a1028"/><g fill="#120a1e">${[95,148,200,252,305].map((x,i)=>`<circle cx="${x}" cy="${246-i%2*6}" r="13"/><rect x="${x-14}" y="${262-i%2*6}" width="28" height="48" rx="13"/>`).join('')}</g>`,-3],
+[`<defs><radialGradient id="a6" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#1d8fa8"/><stop offset="1" stop-color="#0a3550"/></radialGradient></defs><rect width="400" height="400" fill="url(#a6)"/><circle cx="200" cy="200" r="132" fill="none" stroke="#ffd59a" stroke-width="5"/><circle cx="200" cy="200" r="112" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/><path d="M200 60V84M200 316V340M60 200H84M316 200H340" stroke="#ffd59a" stroke-width="4" stroke-linecap="round"/><g transform="rotate(38 200 200)"><path d="M200 82L226 200H174Z" fill="#ff8a5c"/><path d="M200 318L226 200H174Z" fill="#f4f1ea"/></g><circle cx="200" cy="200" r="10" fill="#ffd59a"/><text x="200" y="50" text-anchor="middle" font-size="22" font-weight="800" fill="#ffd59a" font-family="Inter,'DejaVu Sans',sans-serif">N</text>`,2]];
+S.forEach((s,i)=>{const d=document.createElement('section');d.className='sc'+(IL[i]?' hi':'');
+d.innerHTML=`<div class="bg" style="background:radial-gradient(120% 90% at 15% 5%,${s.c[1]},transparent 62%),radial-gradient(90% 80% at 95% 100%,${s.c[2]}88,transparent 60%),${s.c[0]}"></div>${i?'':ROUTE}${IL[i]?`<div class="il" style="--r:${IL[i][1]}deg">${fr(IL[i][0])}</div>`:''}<div class="k">${s.k}</div><h1>${wr(s.t)}</h1><p>${wr(s.p)}</p>`;st.prepend(d)});
+const sc=[...document.querySelectorAll('.sc')].reverse();
+let A,M,muted=false,vc,run=0;
+const vol=v=>{if(M)M.gain.setTargetAtTime(muted?0:v,A.currentTime,.7)};
+function pick(){const v=ss.getVoices().filter(x=>x.lang.toLowerCase().startsWith('fr'));vc=v.find(x=>/google|thomas|amélie|denise|henri|natural/i.test(x.name))||v[0]}
+if(ss){pick();ss.onvoiceschanged=pick}
+function music(){A=new(window.AudioContext||window.webkitAudioContext)();M=A.createGain();M.gain.value=0;const lp=A.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1600;M.connect(lp);lp.connect(A.destination);const ir=A.createBuffer(2,A.sampleRate*2.5,A.sampleRate);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3)}const rv=A.createConvolver(),wt=A.createGain();rv.buffer=ir;wt.gain.value=.7;lp.connect(rv);rv.connect(wt);wt.connect(A.destination);vol(.07);
+const ch=[[261.6,329.6,392],[220,261.6,329.6],[174.6,220,261.6],[196,246.9,293.7]],pn=[523.3,587.3,659.3,784,880];let n=0;
+const note=(f,t,d,v)=>{const o=A.createOscillator(),g=A.createGain();o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+d*.3);g.gain.linearRampToValueAtTime(0,t+d);o.connect(g);g.connect(M);o.start(t);o.stop(t+d)};
+const bar=()=>{const t=A.currentTime,c=ch[n++%4];c.forEach(f=>note(f,t,4.4,.16));note(c[0]/2,t,4.4,.2);for(let k=0;k<4;k++)note(pn[Math.floor(Math.random()*5)],t+k,1.6,.05)};
+bar();setInterval(bar,4000)}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function say(t){const min=wait(t.length*55+1500);
+if(muted||!ss)return Promise.all([wait(t.length*70),min]);
+const sp=new Promise(r=>{const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';if(vc)u.voice=vc;u.rate=.94;u.onend=u.onerror=r;ss.speak(u)});
+return Promise.all([Promise.race([sp,wait(t.length*90+3000)]),min])}
+async function play(){const id=++run;if(ss)ss.cancel();$('.cr').classList.remove('on');$('.go').classList.add('h');st.classList.add('play');if(!A)music();
+for(let i=0;i<S.length;i++){if(id!==run)return;sc.forEach((e,j)=>e.classList.toggle('on',j===i));sweep();whoosh();$('.bar').style.width=(i+1)/S.length*100+'%';
+if(!i){try{$('#pm').beginElement()}catch(e){}}
+await wait(1300);vol(.035);await say(S[i].v||S[i].p);vol(.07);await wait(900)}
+if(id===run)$('.cr').classList.add('on')}
+$('#go').onclick=play;$('#re').onclick=play;
+$('#m').onclick=()=>{muted=!muted;$('#m').textContent=muted?'🔇':'🔊';if(M){M.gain.cancelScheduledValues(A.currentTime);M.gain.value=muted?0:.07}if(muted&&ss)ss.cancel()};
+const sw=document.createElement('div');sw.className='sw';st.append(sw);
+['t','b'].forEach(c=>{const e=document.createElement('div');e.className='lb '+c;st.append(e)});
+function sweep(){sw.classList.remove('run');void sw.offsetWidth;sw.classList.add('run')}
+function whoosh(){if(!A||muted)return;const t=A.currentTime,b=A.createBuffer(1,A.sampleRate*1.4,A.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const s=A.createBufferSource(),f=A.createBiquadFilter(),g=A.createGain();s.buffer=b;f.type='bandpass';f.Q.value=.8;f.frequency.setValueAtTime(300,t);f.frequency.exponentialRampToValueAtTime(3200,t+1.1);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.5);g.gain.linearRampToValueAtTime(0,t+1.3);s.connect(f);f.connect(g);g.connect(A.destination);s.start(t)}
+const cv=document.createElement('canvas');cv.className='fx';st.append(cv);const cx=cv.getContext('2d'),P=[];
+const rs=()=>{cv.width=st.clientWidth;cv.height=st.clientHeight};rs();addEventListener('resize',rs);
+for(let i=0;i<46;i++)P.push({x:Math.random(),y:Math.random(),r:2+Math.random()*7,s:.02+Math.random()*.05,a:.15+Math.random()*.35,p:Math.random()*6});
+(function f(t){cx.clearRect(0,0,cv.width,cv.height);P.forEach(o=>{o.y-=o.s/60;o.x+=Math.sin(t/3000+o.p)*.0002;if(o.y<-.05)o.y=1.05;const X=o.x*cv.width,Y=o.y*cv.height,R=o.r*(cv.height/700+.5)*3,g=cx.createRadialGradient(X,Y,0,X,Y,R);g.addColorStop(0,`rgba(255,226,170,${o.a*(.6+.4*Math.sin(t/900+o.p))})`);g.addColorStop(1,'rgba(255,226,170,0)');cx.fillStyle=g;cx.beginPath();cx.arc(X,Y,R,0,7);cx.fill()});requestAnimationFrame(f)})(0);
+const ps=document.querySelector('.ps svg'),fit=()=>ps.setAttribute('preserveAspectRatio',innerWidth<innerHeight?'xMidYMid meet':'xMidYMid slice');fit();addEventListener('resize',fit);
+</script></body></html>
