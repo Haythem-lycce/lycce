@@ -1,0 +1,7 @@
+{
+  "name": "pourquoi-on-voyage",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx serve -s . -p $PORT"
+  }
+}
