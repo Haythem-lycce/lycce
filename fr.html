@@ -1,3 +1,4 @@
+ · HTML
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Pourquoi on voyage ?</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -52,7 +53,7 @@ canvas.fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-eve
 .cr.on>*{opacity:1;transform:none;filter:none}
 .cr.on>:nth-child(2){transition-delay:.4s}.cr.on>:nth-child(3){transition-delay:.9s}.cr.on>:nth-child(4){transition-delay:1.6s}.cr.on>:nth-child(5){transition-delay:2.2s}
 @media(prefers-reduced-motion:reduce){.on .bg{animation:none}.fx,.sw{display:none}}
-
+ 
 .il{position:absolute;z-index:1;right:7vmin;top:50%;width:min(44vw,74vh);transform:translateY(-50%) rotate(var(--r,0deg)) scale(.94);opacity:0;filter:blur(10px);transition:opacity 1.2s .5s,transform 1.8s .5s,filter 1.2s .5s;pointer-events:none}
 .on .il{opacity:1;transform:translateY(-50%) rotate(var(--r,0deg)) scale(1);filter:none}
 .il svg{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
@@ -61,6 +62,13 @@ canvas.fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-eve
 @media(orientation:landscape){.hi .k,.hi h1,.hi p{max-width:min(44vw,26em)}}
 @media(orientation:portrait){.hi{justify-content:flex-end;padding-bottom:12vh}.il{right:auto;left:50%;top:12vh;width:min(72vw,38vh);transform:translateX(-50%) rotate(var(--r,0deg)) scale(.94)}.on .il{transform:translateX(-50%) rotate(var(--r,0deg)) scale(1)}}
 @media(prefers-reduced-motion:reduce){.il svg{animation:none}}
+ 
+.il img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;box-sizing:border-box;border:14px solid #fbf8f1;border-bottom-width:36px;border-radius:6px;filter:drop-shadow(0 24px 40px rgba(0,0,0,.5))}
+.on .il img{animation:fl 14s ease-in-out infinite alternate}
+.bt2{position:relative;z-index:1;font-size:clamp(13px,2.4vmin,17px);color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.5);border-radius:99px;padding:.55em 1.2em;cursor:pointer}
+.bt2 input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.bt2:focus-within{outline:2px solid #fff;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.il img{animation:none}}
 </style></head><body>
 <div class="st">
 <div class="hud"><button id="m" aria-label="Couper le son">🔊</button></div>
@@ -97,7 +105,7 @@ canvas.fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-eve
 <g text-anchor="middle" fill="#fff" font-family="Fraunces,Georgia,'DejaVu Serif',serif" font-weight="800"><text x="960" y="220" font-size="150">Pourquoi</text><text x="960" y="370" font-size="150">on voyage ?</text></g>
 <text x="960" y="450" text-anchor="middle" fill="#ffd59a" font-family="Inter,'DejaVu Sans',sans-serif" font-size="34">Un film de Haythem Ftouhi et Adem Nasri</text>
 </svg>
-</div><button id="go">▶ Lancer le film</button><span>Active le son : voix et musique</span></div>
+</div><button id="go">▶ Lancer le film</button><label class="bt2">📷 Ajouter mes photos<input id="ph" type="file" accept="image/*" multiple></label><span>Active le son. Jusqu’à 6 photos, dans l’ordre des scènes.</span></div>
 </div>
 <script>
 const S=[
@@ -125,7 +133,7 @@ d.innerHTML=`<div class="bg" style="background:radial-gradient(120% 90% at 15% 5
 const sc=[...document.querySelectorAll('.sc')].reverse();
 let A,M,muted=false,vc,run=0;
 const vol=v=>{if(M)M.gain.setTargetAtTime(muted?0:v,A.currentTime,.7)};
-function pick(){const v=ss.getVoices().filter(x=>x.lang.toLowerCase().startsWith('fr'));vc=v.find(x=>/google|thomas|amélie|denise|henri|natural/i.test(x.name))||v[0]}
+function pick(){let v=ss.getVoices().filter(x=>x.lang.toLowerCase().startsWith('fr'));const l=v.filter(x=>x.localService);if(!navigator.onLine&&l.length)v=l;vc=v.find(x=>/google|thomas|amélie|denise|henri|natural/i.test(x.name))||v[0]}
 if(ss){pick();ss.onvoiceschanged=pick}
 function music(){A=new(window.AudioContext||window.webkitAudioContext)();M=A.createGain();M.gain.value=0;const lp=A.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1600;M.connect(lp);lp.connect(A.destination);const ir=A.createBuffer(2,A.sampleRate*2.5,A.sampleRate);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3)}const rv=A.createConvolver(),wt=A.createGain();rv.buffer=ir;wt.gain.value=.7;lp.connect(rv);rv.connect(wt);wt.connect(A.destination);vol(.07);
 const ch=[[261.6,329.6,392],[220,261.6,329.6],[174.6,220,261.6],[196,246.9,293.7]],pn=[523.3,587.3,659.3,784,880];let n=0;
@@ -137,7 +145,7 @@ function say(t){const min=wait(t.length*55+1500);
 if(muted||!ss)return Promise.all([wait(t.length*70),min]);
 const sp=new Promise(r=>{const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';if(vc)u.voice=vc;u.rate=.94;u.onend=u.onerror=r;ss.speak(u)});
 return Promise.all([Promise.race([sp,wait(t.length*90+3000)]),min])}
-async function play(){const id=++run;if(ss)ss.cancel();$('.cr').classList.remove('on');$('.go').classList.add('h');st.classList.add('play');if(!A)music();
+async function play(){const id=++run;if(ss){ss.cancel();pick()}$('.cr').classList.remove('on');$('.go').classList.add('h');st.classList.add('play');if(!A)music();
 for(let i=0;i<S.length;i++){if(id!==run)return;sc.forEach((e,j)=>e.classList.toggle('on',j===i));sweep();whoosh();$('.bar').style.width=(i+1)/S.length*100+'%';
 if(!i){try{$('#pm').beginElement()}catch(e){}}
 await wait(1300);vol(.035);await say(S[i].v||S[i].p);vol(.07);await wait(900)}
@@ -153,4 +161,9 @@ const rs=()=>{cv.width=st.clientWidth;cv.height=st.clientHeight};rs();addEventLi
 for(let i=0;i<46;i++)P.push({x:Math.random(),y:Math.random(),r:2+Math.random()*7,s:.02+Math.random()*.05,a:.15+Math.random()*.35,p:Math.random()*6});
 (function f(t){cx.clearRect(0,0,cv.width,cv.height);P.forEach(o=>{o.y-=o.s/60;o.x+=Math.sin(t/3000+o.p)*.0002;if(o.y<-.05)o.y=1.05;const X=o.x*cv.width,Y=o.y*cv.height,R=o.r*(cv.height/700+.5)*3,g=cx.createRadialGradient(X,Y,0,X,Y,R);g.addColorStop(0,`rgba(255,226,170,${o.a*(.6+.4*Math.sin(t/900+o.p))})`);g.addColorStop(1,'rgba(255,226,170,0)');cx.fillStyle=g;cx.beginPath();cx.arc(X,Y,R,0,7);cx.fill()});requestAnimationFrame(f)})(0);
 const ps=document.querySelector('.ps svg'),fit=()=>ps.setAttribute('preserveAspectRatio',innerWidth<innerHeight?'xMidYMid meet':'xMidYMid slice');fit();addEventListener('resize',fit);
+const K='pv_photos';
+const setPh=a=>a.forEach((u,i)=>{const el=sc[i+1]&&sc[i+1].querySelector('.il');if(el&&u)el.innerHTML=`<img src="${u}" alt="">`});
+const rz=f=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.82))};im.onerror=()=>res(null);im.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)});
+$('#ph').onchange=async e=>{const a=[];for(const f of[...e.target.files].slice(0,6))a.push(await rz(f));setPh(a);try{localStorage.setItem(K,JSON.stringify(a))}catch(x){}};
+try{const a=JSON.parse(localStorage.getItem(K)||'null');if(a)setPh(a)}catch(x){}
 </script></body></html>
